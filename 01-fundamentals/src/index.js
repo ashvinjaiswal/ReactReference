@@ -16,27 +16,15 @@ const BookList = () => {
 };
 
 const Book = () => {
+  const title = "The Let Them Theory: A Life-Changing Tool";
+  const authorName = "Mel Robbins";
   return (
     <article className="book">
-      <Image></Image>
-      <Title></Title>
-      <Author></Author>
+      <img src="/images/book-1.jpg" alt="The Let Them Theory" />
+      <h2>{title}</h2>
+      <h4>{authorName}</h4>
     </article>
   );
-};
-
-const Image = () => <img src="/images/book-1.jpg" alt="The Let Them Theory" />;
-
-const Title = () => {
-  const titleStyle = {
-    color: "#617D98",
-    fontSize: "0.75rem",
-    marginTop: "0.5rem",
-  };
-  return <h2 style={titleStyle}>The Let Them Theory: A Life-Changing Tool</h2>;
-};
-const Author = () => {
-  return <h3>Mel Robbins</h3>;
 };
 
 root.render(
