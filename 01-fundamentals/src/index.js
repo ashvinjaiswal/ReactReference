@@ -5,33 +5,32 @@ import "./index.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-const firstBook = {
-  img: "/images/book-1.jpg",
-  title: "The Let Them Theory: A Life-Changing Tool",
-  author: "Mel Robbins",
-};
-const secondBook = {
-  author: "James Clear",
-  title: "Atomic Habits",
-  img: "https://m.media-amazon.com/images/I/81F90H7hnML._SL1500_.jpg",
-};
+const books = [
+  {
+    img: "/images/book-1.jpg",
+    title: "The Let Them Theory: A Life-Changing Tool",
+    author: "Mel Robbins",
+  },
+  {
+    author: "James Clear",
+    title: "Atomic Habits",
+    img: "https://m.media-amazon.com/images/I/81F90H7hnML._SL1500_.jpg",
+  },
+];
 
 const BookList = () => {
   return (
     <section className="booklist">
-      <Book
-        image={firstBook.img}
-        title={firstBook.title}
-        author={firstBook.author}
-      >
-        <p>This is the content between the tags.</p>
-        <button>Click me</button>
-      </Book>
-      <Book
-        image={secondBook.img}
-        title={secondBook.title}
-        author={secondBook.author}
-      ></Book>
+      {books.map((book) => {
+        return (
+          <Book
+            key={book.title}
+            image={book.img}
+            title={book.title}
+            author={book.author}
+          ></Book>
+        );
+      })}
     </section>
   );
 };
