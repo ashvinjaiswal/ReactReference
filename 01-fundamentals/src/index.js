@@ -20,18 +20,21 @@ const books = [
 
 const BookList = () => {
   return (
-    <section className="booklist">
-      {books.map((book) => {
-        return (
-          <Book
-            key={book.title}
-            image={book.img}
-            title={book.title}
-            author={book.author}
-          ></Book>
-        );
-      })}
-    </section>
+    <>
+      <EventExample></EventExample>
+      <section className="booklist">
+        {books.map((book) => {
+          return (
+            <Book
+              key={book.title}
+              image={book.img}
+              title={book.title}
+              author={book.author}
+            ></Book>
+          );
+        })}
+      </section>
+    </>
   );
 };
 
@@ -44,6 +47,34 @@ const Book = (props) => {
       <h4>{author}</h4>
       {children}
     </article>
+  );
+};
+
+const EventExample = () => {
+  const handleClick = () => {
+    alert("form handling");
+  };
+
+  const handleFormSubmission = (e) => {
+    e.preventDefault();
+    console.log("form submitted");
+  };
+
+  return (
+    <section>
+      <form onSubmit={handleFormSubmission}>
+        <h2>Search</h2>
+        <input
+          type="text"
+          onChange={(e) => {
+            console.log("input name", e.target.name);
+            console.log("input value", e.target.value);
+          }}
+          name="search"
+        />
+        <button onClick={handleClick}>Search</button>
+      </form>
+    </section>
   );
 };
 
