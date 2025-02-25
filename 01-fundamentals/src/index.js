@@ -19,6 +19,11 @@ const books = [
 ];
 
 const BookList = () => {
+  const publisher = "Apress";
+  const publisherDisplay = () => {
+    console.log(publisher);
+  };
+
   return (
     <>
       <section className="booklist">
@@ -29,6 +34,7 @@ const BookList = () => {
               image={book.img}
               title={book.title}
               author={book.author}
+              dislayPublisher={publisherDisplay}
             ></Book>
           );
         })}
@@ -38,17 +44,15 @@ const BookList = () => {
 };
 
 const Book = (props) => {
-  const { image, title, author, children } = props;
-  const displayTitle = () => {
-    console.log("book title", title);
-  };
+  const { image, title, author, dislayPublisher, children } = props;
+
   return (
     <article className="book">
       <img src={image} alt={title} />
       <h2>{title}</h2>
       <h4>{author}</h4>
       {children}
-      <button onClick={displayTitle}>Get Book Title</button>
+      <button onClick={dislayPublisher}>Display Publisher</button>
     </article>
   );
 };
