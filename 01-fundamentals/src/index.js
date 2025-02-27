@@ -11,10 +11,11 @@ const BookList = () => {
   return (
     <>
       <section className="booklist">
-        {books.map((book) => {
+        {books.map((book, index) => {
           return (
             <Book
               id={book.id}
+              number={index}
               key={book.title}
               image={book.img}
               title={book.title}
