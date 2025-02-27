@@ -138,3 +138,65 @@ const Book = (props) => {
 
 - **Potential Bug:**
   - When invoking the `getBook` function in the `Book` component, you might encounter an issue related to the `this` context or how the function is being invoked.
+
+**Solutions to the Function Invocation Bug**
+
+- **The Problem:**
+
+  - The issue arises when directly invoking the parent's function (`getBook`) within the child's `onClick` event handler.
+  - This often leads to the function being invoked immediately when the component renders, rather than when the button is clicked.
+
+- **Solution 1: Wrapper Function in Child Component**
+
+  - Create a new function within the child component (e.g., `getSingleBook`).
+  - Inside this new function, invoke the parent's function (`getBook`), passing the necessary arguments (e.g., the book's ID).
+  - Pass the new wrapper function (`getSingleBook`) as the `onClick` event handler.
+
+  - **Code Example:**
+
+    ```jsx
+    // Book.js (Child)
+    function Book({ id, getBook }) {
+      const getSingleBook = () => {
+        getBook(id);
+      };
+
+      return (
+        <div>
+          {/* ... other book details ... */}
+          <button onClick={getSingleBook}>Click</button>
+        </div>
+      );
+    }
+    ```
+
+  - **Explanation:**
+    - This approach ensures that the parent's function is only invoked when the button is clicked, as the wrapper function acts as an intermediary.
+
+- **Solution 2: Anonymous Function in `onClick`**
+
+  - Pass an anonymous function directly to the `onClick` event handler.
+  - Inside the anonymous function, invoke the parent's function (`getBook`), passing the necessary arguments.
+
+  - **Code Example:**
+
+    ```jsx
+    // Book.js (Child)
+    function Book({ id, getBook }) {
+      return (
+        <div>
+          {/* ... other book details ... */}
+          <button onClick={() => getBook(id)}>Click</button>
+        </div>
+      );
+    }
+    ```
+
+  - **Explanation:**
+    - Similar to the wrapper function, this approach delays the invocation of the parent's function until the button is clicked.
+    - This method is more concise.
+
+- **Key Takeaways:**
+
+  - In React, it's essential to pass function references as event handlers, not the result of function invocations.
+  - Wrapper functions or anonymous functions can be used to control when a function is invoked.

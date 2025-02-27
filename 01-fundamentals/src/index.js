@@ -63,7 +63,7 @@ const Book = (props) => {
       <h4>{author}</h4>
       {children}
       <button onClick={dislayPublisher}>Display Publisher</button>
-      <button onClick={getBook(id)}>Get Book</button>
+      <button onClick={() => getBook(id)}>Get Book</button>
     </article>
   );
 };
