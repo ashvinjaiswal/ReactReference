@@ -64,3 +64,77 @@
 
   - **Context API:** Provides a way to share data between components without explicitly passing props through every level of the tree.
   - **State Management Libraries (Redux, Zustand, Recoil):** Offer more advanced state management capabilities, allowing components to access and update shared state.
+
+**Passing and Invoking Functions from Parent to Child (Complex Example)**
+
+- **Scenario:**
+
+  - A parent component (`BookList`) has a function (`getBook`) that needs to be invoked in a child component (`Book`).
+  - The `getBook` function takes an ID as an argument and finds a book object based on that ID.
+  - The found book object is then logged to the console.
+
+- **Challenge:**
+
+  - Implement the `getBook` function in the `BookList` component.
+  - Pass the `getBook` function as a prop to the `Book` component.
+  - Invoke the `getBook` function in the `Book` component on a button click, passing the book's ID as an argument.
+
+- **Key Concepts:**
+
+  - Passing functions as props.
+  - Invoking functions passed as props.
+  - Potential issues and solutions when invoking functions passed as props.
+  - Using the javascript find method.
+
+- **Steps:**
+
+  1.  **`getBook` Function in `BookList`:**
+
+      - Create the `getBook` function in the `BookList` component.
+      - This function should accept an ID as an argument.
+      - Use the `find` method to locate the book object with the matching ID in the `books` array.
+      - Log the found book object to the console.
+
+  2.  **Passing `getBook` as a Prop:**
+
+      - Pass the `getBook` function as a prop to the `Book` component when rendering it in the `BookList` component.
+
+  3.  **Invoking `getBook` in `Book`:**
+      - In the `Book` component, destructure the `getBook` prop.
+      - Attach an `onClick` event handler to a button in the `Book` component.
+      - Inside the event handler, invoke the `getBook` function, passing the book's ID as an argument.
+
+```js
+const BookList = () => {
+  const getBook = (id) => {
+    const book = books.find((book) => book.id === id);
+    console.log(book);
+  };
+
+  return (
+    <section className="booklist">
+      {books.map((book) => {
+        return <Book {...book} key={book.id} getBook={getBook} />;
+      })}
+    </section>
+  );
+};
+
+const Book = (props) => {
+  const { img, title, author, getBook, id } = props;
+  // console.log(props);
+
+  return (
+    <article className="book">
+      <img src={img} alt={title} />
+      <h2>{title}</h2>
+      {/* this is not going to work */}
+      <button onClick={getBook(id)}>display title</button>
+      <h4>{author}</h4>
+    </article>
+  );
+};
+```
+
+- **Potential Bug:**
+  - When invoking the `getBook` function in the `Book` component, you might encounter an issue related to the `this` context or how the function is being invoked.
