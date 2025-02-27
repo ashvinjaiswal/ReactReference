@@ -61,3 +61,60 @@
   - Simplified code maintenance.
   - Enhanced code reusability.
   - Clear seperation of concerns.
+
+**Setting Up Local Images in React's Source Folder**
+
+- **Benefits:**
+
+  - Optimized assets: React optimizes images (and other assets) within the `src` folder during the production build process.
+  - Improved performance: Optimized assets lead to faster application loading times.
+
+- **Procedure:**
+
+  1.  **Image Acquisition:**
+
+      - Obtain the desired images.
+      - In the example, the instructor downloads book cover images from Amazon.
+
+  2.  **Folder Structure:**
+
+      - Create an `images` folder within the `src` directory.
+      - Place the image files within the `images` folder.
+      - Note: The image folder must be located within the src folder.
+
+  3.  **Import Images:**
+
+      - In the JavaScript file where you need to use the images (e.g., `books.js`), import each image individually.
+      - Use the `import` statement to import the images.
+      - Assign a variable name to each imported image.
+      - Provide the relative path to the image file, including the file extension.
+      - **Code example:**
+        ```javascript
+        import img1 from "./images/book1.jpg";
+        import img2 from "./images/book2.jpg";
+        import img3 from "./images/book3.jpg";
+        ```
+
+  4.  **Use Imported Images:**
+      - Use the imported image variables as the `src` attribute values for `<img>` elements.
+      - **Code example:**
+        ```javascript
+        const books = [
+          {
+            id: 1,
+            title: "Book 1 Title",
+            author: "Book 1 Author",
+            img: img1,
+          },
+          // ... other book objects
+        ];
+        ```
+
+- **Key Considerations:**
+
+  - **Individual Imports:** Each image must be imported separately. This can be tedious for large numbers of images.
+  - **Source Folder Placement:** Images must be placed within the `src` folder or a subfolder of `src`.
+  - **Optimization:** React optimizes images in the `src` folder during the production build, resulting in improved performance.
+  - **Alternatives:** Images in the `public` folder are not optimized. They are simply copied to the build directory.
+  - **ES6 Modules:** This process relies heavily on ES6 modules.
+  - **Production builds:** The optimization happens when the react application is built for production.

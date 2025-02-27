@@ -1,14 +1,24 @@
+import img1 from "./images/book1.jpg";
+import img2 from "./images/book2.jpg";
+import img3 from "./images/book3.jpg";
+
 export const books = [
   {
-    img: "/images/book-1.jpg",
+    img: img1,
     title: "The Let Them Theory: A Life-Changing Tool",
     author: "Mel Robbins",
     id: 1,
   },
   {
-    author: "James Clear",
-    title: "Atomic Habits",
-    img: "https://m.media-amazon.com/images/I/81F90H7hnML._SL1500_.jpg",
+    author: "Becky Excell",
+    title: "Budget Gluten Free: Over 100 Easy and Affordable Recipes",
+    img: img2,
     id: 2,
+  },
+  {
+    author: "Simon Akeroyd",
+    title: "Grow Your Groceries: 40 Hacks for Growing Plants",
+    img: img3,
+    id: 3,
   },
 ];
