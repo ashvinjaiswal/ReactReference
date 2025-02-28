@@ -223,3 +223,99 @@ export default UseStateBasics;
   - These rules are essential for ensuring that hooks work correctly.
   - Violating these rules can lead to unexpected behavior and errors.
   - The rules are to maintain the internal workings of how react hooks function.
+
+## **useState with Arrays: Challenge**
+
+- **Objective:**
+
+  - To use the `useState` hook to manage an array of data.
+  - To render the array data in the UI.
+  - To implement functions to clear the array and remove individual items.
+
+Setup Challenge :
+
+- import data
+- setup a state value
+  - people - default value equal to data
+- display list(people) in the browser
+
+- create two functions
+
+  - one that removes single item from the list
+  - one that clears entire list
+
+- **Steps:**
+
+  1.  **Import Data:**
+
+      - Import the `data` array from `data.js` into the `UseStateArray.jsx` component using ES6 modules.
+      - `import data from './data';`
+
+  2.  **Set Up State:**
+
+      - Use the `useState` hook to create a state variable named `people` and a function named `setPeople` to update it.
+      - Initialize the `people` state with the imported `data` array.
+      - `const [people, setPeople] = React.useState(data);`
+
+  3.  **Render the List:**
+
+      - Use the `map()` method to iterate over the `people` array and render each item in the UI.
+      - Destructure the `id` and `name` properties from each item.
+      - Use a `<div>` element with a unique `key` prop for each item.
+      - Display the `name` property in a heading element.
+      - Example Code:
+
+```js
+import React from "react";
+import { data } from "../../../data";
+const UseStateArray = () => {
+  const [people, setPeople] = React.useState(data);
+
+  const removeItem = (id) => {
+    let newPeople = people.filter((person) => person.id !== id);
+    setPeople(newPeople);
+  };
+  return (
+    <div>
+      {people.map((person) => {
+        const { id, name } = person;
+        return (
+          <div key={id} className="item">
+            <h4>{name}</h4>
+            <button onClick={() => removeItem(id)}>remove</button>
+          </div>
+        );
+      })}
+      <button
+        className="btn"
+        style={{ marginTop: "2rem" }}
+        onClick={() => setPeople([])}
+      >
+        clear items
+      </button>
+    </div>
+  );
+};
+
+export default UseStateArray;
+```
+
+4.  **Implement Clear List Function:**
+
+    - Create a function that calls `setPeople` with an empty array (`[]`) to clear the list.
+
+5.  **Implement Remove Item Function:**
+
+    - Create a function that takes an `id` as an argument.
+    - Use the `filter()` method to create a new array that excludes the item with the given `id`.
+    - Call `setPeople` with the new filtered array.
+
+6.  **Add Buttons:**
+    - Add a button to clear all items.
+    - Add a button to each item that will remove that specific item.
+
+- **Key Points:**
+  - The `useState` hook is used to manage the array state.
+  - The `map()` method is used to render the array data.
+  - The `filter()` method is used to create a new array with filtered items.
+  - Unique keys are important when rendering lists.
