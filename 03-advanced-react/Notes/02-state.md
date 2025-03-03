@@ -319,3 +319,92 @@ export default UseStateArray;
   - The `map()` method is used to render the array data.
   - The `filter()` method is used to create a new array with filtered items.
   - Unique keys are important when rendering lists.
+
+## **useState with Objects: Initial Setup**
+
+Setup Challenge :
+
+- setup three state values
+  - name(string)
+  - age(number)
+  - hobby(string)
+- render in the browser
+- create a button
+  - setup a function
+    - update all three state values
+- as a result once the user clicks the button,
+  new person is displayed in the browser
+
+- **Objective:**
+
+  - To demonstrate the need for using objects with `useState` when managing related state values.
+  - To set up individual state values and update them with a button click.
+
+- **Steps:**
+
+  1.  **Import Component:**
+
+      - Import the `UseStateObject.jsx` component into `App.jsx`.
+      - The file is located in the `04-useState-object/starter/` folder.
+
+  2.  **Set Up Individual State Values:**
+
+      - Use the `useState` hook to create three separate state variables: `name`, `age`, and `hobby`.
+      - Initialize them with default values (e.g., "Peter", 24, "read book").
+      - Example code:
+
+        ```jsx
+        import React, { useState } from "react";
+
+        const UseStateObject = () => {
+          const [name, setName] = useState("Peter");
+          const [age, setAge] = useState(24);
+          const [hobby, setHobby] = useState("read book");
+          // ...
+        };
+        ```
+
+  3.  **Render State Values:**
+
+      - Use JSX to display the current values of `name`, `age`, and `hobby` in the component.
+      - Example Code:
+
+        ```jsx
+        return (
+          <React.Fragment>
+            <h3>Name: {name}</h3>
+            <h4>Age: {age}</h4>
+            <h4>Enjoys: {hobby}</h4>
+            {/* ... */}
+          </React.Fragment>
+        );
+        ```
+
+  4.  **Create Update Function:**
+
+      - Create a function (e.g., `displayPerson`) that updates all three state values with new values (e.g., "John", 28, "scream at the computer").
+      - Example Code:
+
+        ```jsx
+        const displayPerson = () => {
+          setName("John");
+          setAge(28);
+          setHobby("scream at the computer");
+        };
+        ```
+
+  5.  **Add Button:**
+
+      - Add a button to the component that calls the update function when clicked.
+      - Example Code:
+
+        ```jsx
+        <button className="btn" onClick={displayPerson}>
+          Show John
+        </button>
+        ```
+
+- **Key Points:**
+  - This example demonstrates that managing multiple related state values with individual `useState` calls can become cumbersome.
+  - Updating multiple state values requires calling multiple `set` functions.
+  - React fragments are used to return multiple JSX elements.
