@@ -1,22 +1,28 @@
 import { useState } from "react";
 
 const UseStateObject = () => {
-  const [name, setName] = useState("Peter");
-  const [age, setAge] = useState(24);
-  const [hobby, setHobby] = useState("Painiting");
+  const [person, setPerson] = useState({
+    name: "Peter",
+    age: "24",
+    hobby: "Painting",
+  });
 
   const displayPerson = () => {
-    setName("smith");
-    setAge(30);
-    setHobby("Dance");
+    setPerson({ name: "Smith", age: 25, hobby: "Music" });
+
+    // be careful, don't overwrite
+    // setPerson({ name: 'susan' });
+
+    // copy the property and override specific propertey
+    // setPerson({ ...person, name: 'susan' });
   };
 
   return (
     <>
       <h2>useState object example</h2>
-      <h3>{name}</h3>
-      <p>{age}</p>
-      <p>hobby {hobby}</p>
+      <h3>{person.name}</h3>
+      <p>{person.age}</p>
+      <p>hobby {person.hobby}</p>
       <button onClick={displayPerson} className="btn">
         Display Person
       </button>

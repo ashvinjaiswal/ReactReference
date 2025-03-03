@@ -408,3 +408,109 @@ Setup Challenge :
   - This example demonstrates that managing multiple related state values with individual `useState` calls can become cumbersome.
   - Updating multiple state values requires calling multiple `set` functions.
   - React fragments are used to return multiple JSX elements.
+
+**React State Updates and Re-renders: Auto-Batching**
+
+- **Question:**
+
+  - If multiple state update functions (`set...`) are called within the same event handler, how many re-renders will occur?
+
+- **Answer:**
+
+  - Only one re-render will occur.
+
+- **Explanation:**
+
+  - React uses a technique called **auto-batching** to group multiple state updates into a single re-render.
+  - This optimization improves performance by reducing the number of unnecessary re-renders.
+  - Even if you have multiple `set...` calls in an event handler, React will batch them together and perform a single re-render.
+
+- **React 18 Changes:**
+
+  - Prior to React 18, there were cases where multiple state updates in the same event handler might have triggered multiple re-renders.
+  - With React 18, auto-batching is more consistent, and multiple state updates within the same handler will always result in a single re-render.
+
+- **Key Points:**
+  - Auto-batching is a performance optimization.
+  - It reduces the number of re-renders, leading to smoother UI updates.
+  - In React 18, auto-batching is applied more broadly.
+  - This optimization happens behind the scenes, and the developer does not need to do anything to enable it.
+
+**Refactoring useState with Objects**
+
+- **Benefits of Object State:**
+
+  - Reduces the number of `useState` calls, simplifying code.
+  - Makes it easier to manage related state values.
+  - Improves code readability and maintainability.
+
+- **Refactoring Process:**
+
+  1.  **Create Object State:**
+      - Replace individual `useState` calls with a single `useState` call that initializes an object.
+      - Example:
+        ```jsx
+        const [person, setPerson] = useState({
+          name: "Peter",
+          age: 24,
+          hobby: "read books",
+        });
+        ```
+  2.  **Update Rendering:**
+      - Update JSX to access object properties (e.g., `person.name`, `person.age`).
+  3.  **Update Update Function:**
+      - Modify the update function to call `setPerson` with a new object.
+      - To avoid overwriting existing properties, use the spread operator (`...person`) to copy the current state and then override specific properties.
+      - Example:
+        ```jsx
+        const displayPerson = () => {
+          setPerson({
+            ...person, //copy the old object.
+            name: "Susan", //override the name property.
+          });
+        };
+        ```
+  4.  **Gotchas:**
+      - Be mindful of passing incorrect data types to `setPerson`. Passing a string instead of an object will break the component.
+      - If you only provide some of the object properties when updating the state, you will lose the other properties.
+      - Always spread the old object when you want to update only some of the properties.
+
+- **Example Code:**
+
+  ```jsx
+  import React, { useState } from "react";
+
+  const UseStateObject = () => {
+    const [person, setPerson] = useState({
+      name: "Peter",
+      age: 24,
+      hobby: "read books",
+    });
+
+    const displayPerson = () => {
+      setPerson({
+        ...person,
+        name: "Susan",
+      });
+    };
+
+    return (
+      <>
+        <h3>Name: {person.name}</h3>
+        <h4>Age: {person.age}</h4>
+        <h4>Enjoys: {person.hobby}</h4>
+        <button className="btn" onClick={displayPerson}>
+          Show Susan
+        </button>
+      </>
+    );
+  };
+
+  export default UseStateObject;
+  ```
+
+- **Key Points:**
+  - Using object state can simplify state management for related values.
+  - The spread operator is crucial for preserving existing state when updating object properties.
+  - Be aware of potential gotchas when updating object state.
+  - This is not a solution for every use case.
