@@ -567,3 +567,63 @@ Setup Challenge :
   - State updates in React are asynchronous.
   - Do not rely on the immediate availability of the updated state value after calling the `set` function.
   - If you need to perform an action based on the updated state, do it in a `useEffect` hook that depends on the state value, or by using the functional update form of the set function.
+
+**useState Set Function: Functional Updates**
+
+- **Functional Update Approach:**
+
+  - Instead of directly passing the new state value to the `set` function, you can pass a function.
+  - This function receives the current state value as its first argument.
+  - You must return the new state value from this function.
+
+- **Syntax:**
+
+  - `setValue((currentState) => { /* logic to calculate newState */ return newState; });`
+
+- **Benefits:**
+
+  - Provides access to the most recent state value, ensuring accurate updates.
+  - Useful when the new state depends on the previous state.
+  - Helps avoid issues with asynchronous state updates.
+
+- **Code Example:**
+
+  ```jsx
+  import React, { useState } from "react";
+
+  const UseStateGotcha = () => {
+    const [value, setValue] = useState(0);
+
+    const handleClick = () => {
+      setValue((currentState) => {
+        const newState = currentState + 1;
+        return newState;
+      });
+    };
+
+    return (
+      <div>
+        <h1>{value}</h1>
+        <button className="btn" onClick={handleClick}>
+          Increase
+        </button>
+      </div>
+    );
+  };
+
+  export default UseStateGotcha;
+  ```
+
+- **Explanation:**
+
+  - In the `handleClick` function, `setValue` is called with a function as its argument.
+  - The `currentState` parameter represents the current value of the `value` state.
+  - The function calculates the `newState` by adding 1 to the `currentState`.
+  - The `newState` is then returned, which becomes the new value of the `value` state.
+
+- **Key Points:**
+  - The `currentState` parameter is provided by React and represents the state value before the update.
+  - You must return the new state value from the function.
+  - This approach is particularly useful when the new state depends on the previous state.
+  - It is not always required to use the functional update. If the new state does not depend on the old state, the normal method of passing the new value is fine.
+  - If you do not return a value from the function, the state will become undefined.
