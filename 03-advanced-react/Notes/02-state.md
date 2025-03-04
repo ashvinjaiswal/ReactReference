@@ -514,3 +514,56 @@ Setup Challenge :
   - The spread operator is crucial for preserving existing state when updating object properties.
   - Be aware of potential gotchas when updating object state.
   - This is not a solution for every use case.
+
+**Note useState Set Function: Asynchronous Updates**
+
+- **Objective:**
+
+  - To demonstrate that state updates in React are asynchronous.
+  - To highlight the potential issue of relying on the immediate availability of the updated state value.
+
+- **Challenge:**
+
+  - Create a `count` state variable using `useState` initialized to 0.
+  - Add a button that increments the `count` state by 1 using the `setCount` function.
+  - Log the `count` state value to the console immediately after calling `setCount`.
+  - Observe the difference between the displayed value and the logged value.
+
+- **Code Example:**
+
+  ```jsx
+  import React, { useState } from "react";
+
+  const UseStateGotcha = () => {
+    const [value, setValue] = useState(0);
+
+    const handleClick = () => {
+      setValue(value + 1);
+      console.log(value); // Log the value immediately after setValue
+    };
+
+    return (
+      <div>
+        <h1>{value}</h1>
+        <button className="btn" onClick={handleClick}>
+          Increase
+        </button>
+      </div>
+    );
+  };
+
+  export default UseStateGotcha;
+  ```
+
+- **Explanation:**
+
+  - When the button is clicked, `setValue` is called to update the `value` state.
+  - Immediately after, `console.log(value)` logs the current value of `value`.
+  - The logged value will be the _previous_ value of `value`, not the updated one.
+  - This is because `setValue` does not update the state synchronously. React batches state updates for performance reasons.
+  - Therefore, the console log will show the old value, until the next render.
+
+- **Key Takeaways:**
+  - State updates in React are asynchronous.
+  - Do not rely on the immediate availability of the updated state value after calling the `set` function.
+  - If you need to perform an action based on the updated state, do it in a `useEffect` hook that depends on the state value, or by using the functional update form of the set function.
