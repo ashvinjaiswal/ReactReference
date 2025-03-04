@@ -627,3 +627,88 @@ Setup Challenge :
   - This approach is particularly useful when the new state depends on the previous state.
   - It is not always required to use the functional update. If the new state does not depend on the old state, the normal method of passing the new value is fine.
   - If you do not return a value from the function, the state will become undefined.
+
+**useState Set Function: Functional Updates with setTimeout**
+
+- **Problem:**
+
+  - When using `setTimeout` to update state, the state update may not reflect the latest state value if multiple updates occur within the timeout period.
+  - The callback function inside `setTimeout` captures the state value at the time the timeout is set, not the most recent value when the timeout fires.
+
+- **Code Example (Problem):**
+
+  ```jsx
+  import React, { useState } from "react";
+
+  const UseStateTimeout = () => {
+    const [value, setValue] = useState(0);
+
+    const handleClick = () => {
+      setTimeout(() => {
+        setValue(value + 1); // Uses captured 'value'
+        console.log("Value updated:", value + 1);
+      }, 3000);
+      console.log("Button clicked");
+    };
+
+    return (
+      <div>
+        <h1>{value}</h1>
+        <button className="btn" onClick={handleClick}>
+          Increase later
+        </button>
+      </div>
+    );
+  };
+
+  export default UseStateTimeout;
+  ```
+
+  - If you click the button multiple times within 3 seconds, the state will only increment by 1, regardless of how many times you click. This is because the value within the setTimeOut callback function is the value of the state at the time the setTimeOut function was created.
+
+- **Solution: Functional Updates**
+
+  - Use the functional update form of `setValue` to access the most recent state value.
+  - Pass a function to `setValue` that receives the current state as an argument and returns the new state.
+
+- **Code Example (Solution):**
+
+  ```jsx
+  import React, { useState } from "react";
+
+  const UseStateTimeout = () => {
+    const [value, setValue] = useState(0);
+
+    const handleClick = () => {
+      setTimeout(() => {
+        setValue((currentState) => {
+          const newState = currentState + 1;
+          return newState;
+        });
+        console.log("Value updated");
+      }, 3000);
+      console.log("Button clicked");
+    };
+
+    return (
+      <div>
+        <h1>{value}</h1>
+        <button className="btn" onClick={handleClick}>
+          Increase later
+        </button>
+      </div>
+    );
+  };
+
+  export default UseStateTimeout;
+  ```
+
+- **Explanation:**
+
+  - By using `setValue((currentState) => { ... })`, the callback function within `setTimeout` receives the most recent state value when the timeout fires.
+  - This ensures that the state is updated correctly, even if multiple updates occur within the timeout period.
+
+- **Key Points:**
+  - Functional updates are essential when state updates depend on previous state values within asynchronous operations like `setTimeout`.
+  - They prevent issues caused by captured state values in closures.
+  - This pattern ensures that state updates are based on the latest state, regardless of when the update occurs.

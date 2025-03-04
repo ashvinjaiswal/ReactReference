@@ -8,11 +8,12 @@ const UseStateGotcha = () => {
     // console.log(count);
 
     //Sync way
-    setCount((currentState) => {
-      const newState = currentState + 1;
-      console.log(newState);
-      return newState;
-    });
+    setTimeout(() => {
+      setCount((currentState) => {
+        return currentState + 1;
+      });
+    }, 3000);
+    console.log("button clicked");
   };
 
   return (
